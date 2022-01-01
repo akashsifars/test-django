@@ -1,0 +1,22 @@
+[
+  {
+      "model": "polls.forms",
+      "pk": 1,
+      "fields": {
+          "name": "test",
+          "start_date": "2020-11-11",
+          "end_date": "2020-11-12",
+          "category": "1"
+      }
+  },
+  {
+      "model": "polls.forms",
+      "pk": 2,
+      "fields": {
+          "name": "akash",
+          "start_date": "2020-11-11",
+          "end_date": "2020-11-12",
+          "category": "1"
+      }
+  }
+]

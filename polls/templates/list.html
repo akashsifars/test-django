@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<ul>
+    {% for data in list %}
+        <li>
+            {{ data.name }}
+        </li>
+        <li>
+            {{ data.category }}
+        </li>
+        <li>
+            {{ data.start_date }}
+        </li>
+        <li>
+            {{ data.end_date }}
+        </li>
+        <li>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
