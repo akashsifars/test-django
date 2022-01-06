@@ -1,8 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST">
-    {{form.as_p}}
+<form method="POST" id="submit-poll">
+    <div>
+        <label for="sources">Sources</label>
+        <select name="sources" id="sources">
+            <option value="">--Select Source--</option>
+            <option value="1">Market</option>
+            <option value="2">Trade</option>
+            <option value="3">Cross</option>
+            <option value="4">All</option>
+        </select>
+    </div>
     {% csrf_token %}
-    <input type="submit" value="Submit" class="btn btn-primary" name="submit">
+    {{form.as_p}}
+    <div>
+        <label for="exchanges">Exchange</label>
+        <select name="exchanges" id="exchanges">
+            <option value="">--Select Options--</option>
+            <option value="1">Market</option>
+            <option value="2">Trade</option>
+            <option value="3">Cross</option>
+            <option value="4">All</option>
+        </select>
+    </div>
+    <input type="submit" value="Submit" disabled class="btn btn-primary" name="submit">
 </form>
 {% endblock %}

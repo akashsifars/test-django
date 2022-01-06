@@ -13,8 +13,114 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
 <script>
 $(document).ready(function() {
     $('.datepicker').datepicker();
+    localStorage.setItem('loggedIn', false);
+    $('input#id_name').attr('disabled', 'true')
+    $('input#id_start_date').attr('disabled', 'true')
+    $('input#id_end_date').attr('disabled', 'true')
+    $('select#id_category').attr('disabled', 'true')
+    $('select#exchanges').attr('disabled', 'true')
+    $('input').change(() => {
+        let status = true
+        if(!$('input#id_name').val()) {
+            status = false
+        }
+        if(!$('input#id_start_date').val()) {
+            status = false
+        }
+        if(!$('input#id_end_date').val()) {
+            status = false
+        }
+        if(status){
+            $('input[name="submit"]').removeAttr('disabled')
+        }
+    })
+    // $(document).on('change', 'select#sources', function(e){
+    //     console.log($(this).val())
+    // })
+    $('select#sources').change((e) => {
+        $('input#id_name').attr('disabled', 'true')
+        $('input#id_start_date').attr('disabled', 'true')
+        $('input#id_end_date').attr('disabled', 'true')
+        $('select#id_category').attr('disabled', 'true')
+        $('select#exchanges').attr('disabled', 'true')
+        const value = e.target.value
+        if(value == '2' || value == '4') {
+            Swal.fire({
+            title: 'Login',
+            html:
+            '<input id="username" class="swal2-input" type="text" placeholder="User Name" required>' +
+            '<input id="password" class="swal2-input" type="password" placeholder="Password" required>' + '{% csrf_token %}' +
+            '<span style="color: red;" id="error"></span>',
+            showCancelButton: true,
+            confirmButtonText: 'Confirm',
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                return fetch(`login/`,{
+                    // Adding method type
+                    method: "POST",
+                    
+                    // Adding body or contents to send
+                    body: JSON.stringify({
+                        username: $('input#username').val(),
+                        password: $('input#password').val()
+                    }),
+                    
+                    // Adding headers to the request
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        localStorage.setItem('loggedIn', false);
+                        Swal.close()
+                        toastr.error('Login Failed', 'Error!')
+                        return
+                    } else {
+                        toastr.success('Logged In successfully', 'Success!')
+                        localStorage.setItem('loggedIn', true);
+                        $('input[type="text"]').removeAttr('disabled')
+                        $('select').removeAttr('disabled')
+                        return response.json()
+                    }
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Swal.fire({
+                    //     title: `${result.value.login}'s avatar`,
+                    //     imageUrl: result.value.avatar_url
+                    // })
+                }
+            })
+        } else {
+            $('input[type="text"]').removeAttr('disabled')
+            $('select').removeAttr('disabled')
+        }
+    })
+
+    $('form#submit-poll').validate({
+        name: {
+            required: true
+        },
+        start_date: {
+            required: true
+        },
+        end_date: {
+            required: true
+        },
+        category: {
+            required: true
+        }
+    })
 });
 </script>

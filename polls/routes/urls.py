@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('form/', text.index, name='index'),
     path('submit/', success.index, name='index'),
+    path('form/login/', text.login, name='login'),
     path('admin/', admin.site.urls),
     path('list/', list.list_data, name='list_data'), 
 ]
