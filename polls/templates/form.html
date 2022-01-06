@@ -1,28 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST" id="submit-poll">
-    <div>
+<div class="col-12 d-flex align-items-center form-layout setHeight">
+  <div class="card mx-auto my-auto bg-blue shadow p-4">
+    <form method="POST" id="submit-poll">
+      <div class="custom-margin-select d-flex">
         <label for="sources">Sources</label>
-        <select name="sources" id="sources">
-            <option value="">--Select Source--</option>
-            <option value="1">Market</option>
-            <option value="2">Trade</option>
-            <option value="3">Cross</option>
-            <option value="4">All</option>
+        <select name="sources" id="sources" class="form-select form-select-sm">
+          <option value="" class="fst-italic">--Select Source--</option>
+          <option value="1">Market</option>
+          <option value="2">Trade</option>
+          <option value="3">Cross</option>
+          <option value="4">All</option>
         </select>
-    </div>
-    {% csrf_token %}
-    {{form.as_p}}
-    <div>
+      </div>
+      {% csrf_token %} {{form.as_p}}
+      <div class="custom-margin-select d-flex">
         <label for="exchanges">Exchange</label>
-        <select name="exchanges" id="exchanges">
-            <option value="">--Select Options--</option>
-            <option value="1">Market</option>
-            <option value="2">Trade</option>
-            <option value="3">Cross</option>
-            <option value="4">All</option>
+        <select
+          name="exchanges"
+          id="exchanges"
+          class="form-select form-select-sm"
+        >
+          <option value="" class="fst-italic">--Select Options--</option>
+          <option value="1">Market</option>
+          <option value="2">Trade</option>
+          <option value="3">Cross</option>
+          <option value="4">All</option>
         </select>
-    </div>
-    <input type="submit" value="Submit" disabled class="btn btn-primary" name="submit">
-</form>
+      </div>
+      <input
+        type="submit"
+        value="Submit"
+        disabled
+        class="btn btn-primary btn-md"
+        name="submit"
+      />
+    </form>
+  </div>
+</div>
 {% endblock %}
